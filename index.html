@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Interview Tests</title>
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+            <h1>Problems</h1>
+        <section>
+            <h2>Layout</h2>
+            <p><strong>Please create a layout 3 X 1 layout with height adjusted based on the content height. Within each of the block, it should have three sections. First and third section should have a fixed height of 50 px and content within them should not wrap and shows ellipsis if content is too long.</strong></p>
+            <h3><b>Solution</b></h3>
+            <p>This design was made with flexbox. The requested layout (3x1) is shown from an 850px screen.</p>
+             <div class="container">
+                <div class="cell">
+                    <div class=" cell-header fixed-height">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam feugiat, lacus a malesuada tempor, elit tellus dictum leo, eu dapibus elit sem sed ipsum.</div>
+                    <div class=" cell-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sed eros at mauris rhoncus vehicula et vitae diam.</div>
+                    <div class="cell-footer fixed-height">Cras vitae ligula eget sapien semper bibendum. Sed nibh justo, commodo quis pretium id, mollis ut ligula. Integer a placerat metus.</div>
+                </div>
+                <div class="cell">
+                    <div class="cell-header fixed-height">Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi luctus nulla id justo pharetra, a elementum neque egestas.</div>
+                    <div class="cell-body">Vestibulum erat neque, molestie id blandit vitae, egestas eu nisl. Donec id ex tincidunt, placerat nunc quis, luctus risus. Aenean ut nunc id risus convallis tempus quis eget dui. Quisque sit amet finibus nisi. Curabitur mattis molestie sagittis. Mauris non tortor in lorem varius lobortis et eget sem. Vivamus ut mauris metus. Mauris nulla metus, rutrum ac mi sit amet, feugiat lobortis massa. Pellentesque ut tempor ipsum. Praesent hendrerit suscipit libero ac laoreet. Morbi aliquet urna in ex fringilla porttitor. Proin ac auctor nibh. Etiam ultricies sapien at leo consequat condimentum. Pellentesque dictum nibh ornare egestas posuere. Ut vehicula, risus vitae efficitur semper, ex nisl aliquet leo, ac fringilla arcu sapien nec neque.
+
+                        Donec iaculis pretium nisl. Nulla vitae felis aliquet sapien tempor mattis. Integer erat elit, efficitur quis ante eu, viverra pharetra ex. Mauris quis tellus sed nisl auctor auctor. Nam eget dapibus magna. Nulla facilisi. Proin in urna sapien. Morbi at facilisis enim. In nisi lectus, faucibus sit amet venenatis nec, condimentum id dolor. Suspendisse varius, ipsum eu vestibulum commodo, lectus erat congue odio, vitae semper dui massa nec magna. Nunc ut ex velit. Morbi semper felis non lectus elementum hendrerit.</div>
+                    <div class="cell-footer fixed-height">Curabitur et est justo. Phasellus eleifend tempor sagittis. Mauris hendrerit, velit eget fringilla porta, ligula ipsum pharetra orci, porttitor venenatis dui tellus at elit.</div>
+                </div>
+                <div class="cell">
+                    <div class="cell-header fixed-height">Aliquam suscipit tellus ligula, nec congue dolor lobortis a.</div>
+                    <div class="cell-body">Fusce aliquam diam eget laoreet mollis. Maecenas gravida elit sit amet lorem ultrices pretium. Etiam eget luctus urna. Aliquam varius, est id eleifend lobortis, risus diam interdum arcu, sit amet iaculis quam leo a leo. Fusce maximus finibus volutpat. Nulla nec fermentum lacus. Nam molestie nec dolor id fermentum.</div>
+                    <div class="cell-footer fixed-height">Integer at ullamcorper felis, in feugiat elit. Ut eleifend eros at enim gravida molestie. Etiam eu elit et mauris pharetra convallis. Ut id orci at ex dapibus sodales. Proin id ex non elit interdum fermentum quis id lectus.</div>
+                </div>
+            </div> 
+        </section>
+        <section>
+            <h2>Javascript</h3>
+                <p><strong>With the code below, why do you think the console log always shows 5? And how do you fix the function to show the correct index.</strong></p>
+                <P>The scope of a variable depends on how it is declared (let, var), and  based on the definition of closure, which is a function that "does not have 
+                    its own variables"  but rather stores references to the surrounding state, the problem in this code is based on the fact that the functions assigned to the “click” event are <big class ="red">closures</big>  that consist of the definition of the function and the environment covered, so the variable “i” is pointed to the last value assigned by the for according to its scope.</P>
+                <p>Proposed solutions:</p>
+                <ul>
+                    <li>Create a new environment for the functions assigned to the click so that the corresponding string in the array is referenced (Solution 1).</li>
+                    <li>Change var to let and thus limit the scope to the code block where the variable is defined (Solution 2).</li>
+                </ul>
+                <button>1</button>
+                <button>2</button>
+                <button>3</button>
+                <button>4</button>
+                <button>5</button>
+                <pre>
+                    <h3>Solution 1</h3>
+                    <code>
+                        var buttons = document.querySelectorAll('button');
+                        function indexCallback (i){
+                            return function () {
+                                console.log('clicked on ', i);
+                            }
+                        }
+                        for (var i = 0; i < buttons.length; i++) {
+                            buttons[i].addEventListener('click', indexCallback(i) );
+                        }
+                    </code>
+                    <h3>Solution 2</h3>
+                    <code>
+                        var buttons = document.querySelectorAll('button');
+    
+                        for (let i = 0; i < buttons.length; i++) {
+                            buttons[i].addEventListener('click', function () {
+                                console.log('clicked on ', i);
+                            });
+                        }
+                    </code>
+                </pre>
+            </section>
+            <script>
+                var buttons = document.querySelectorAll('button');
+    
+                function indexCallback (i){
+                    return function () {
+                        console.log('Solution 1: clicked on ', i);
+                    }
+                }
+                for (var i = 0; i < buttons.length; i++) {
+                    buttons[i].addEventListener('click', indexCallback(i) );
+                }
+    
+                for (let i = 0; i < buttons.length; i++) {
+                            buttons[i].addEventListener('click', function () {
+                                console.log('Solution 2: clicked on ', i);
+                            });
+                        }
+    
+                
+                
+            </script>
+    </body>
+</html>
